@@ -20,9 +20,13 @@ std::vector<std::string> split(std::string str, std::string sep){
 	return arr;
 }
 
-bool estbon(vector<double> a, int intervalle){
-for (unsigned int i = 0; i < a.size() - 1; i++)
-	if (a.at(i + 1)-a.at(i) > intervalle/2)
+bool estbon(vector<double> &a, double intervalle){
+	for (unsigned int i = 1; i < a.size() - 2; i++)
+		if (a.at(i + 1) - a.at(i) > intervalle)
+			return false;
+	if (a.at(1) - a.at(0) > intervalle/2)
+		return false;
+	if (a.at(a.size()-1) - a.at(a.size()-2) > intervalle / 2)
 		return false;
 return true;
 }
@@ -51,8 +55,7 @@ int main(){
 		nombres.clear();
 		boum = split(toto, " ");
 		for (unsigned int i = 0; i < boum.size(); i++){
-			nombres.push_back(atof(boum.at(i).c_str()) - intervalle/2);
-			nombres.push_back(atof(boum.at(i).c_str()) + intervalle / 2);
+			nombres.push_back(atof(boum.at(i).c_str()));
 		}
 		nombres.push_back(0.);
 		nombres.push_back(max_size_H);
@@ -62,8 +65,7 @@ int main(){
 		boum = split(toto, " ");
 		nombres.clear();
 		for (unsigned int i = 0; i < boum.size(); i++){
-			nombres.push_back(atof(boum.at(i).c_str()) - intervalle / 2);
-			nombres.push_back(atof(boum.at(i).c_str()) + intervalle / 2);
+			nombres.push_back(atof(boum.at(i).c_str()));
 		}
 		nombres.push_back(0.);
 		nombres.push_back(max_size_L);
