@@ -1,5 +1,5 @@
 // ProjectFiles.cpp : main project file.
-#include "stdafx.h"
+//#include "stdafx.h"
 #include <iostream>
 #include <vector>
 #include <utility>
@@ -27,6 +27,13 @@ int main()
 				vecteurres.at(numtache).second.second.push_back(tachedep);
 			}
 		}	
+		bool trouve = false;
+		for (int i = 1; i <= nbtaches; i++){
+			if (trouve)
+				vecteurres.at(i).second.first = false;
+			if(vecteurres.at(i).second.first)
+				trouve = true;
+		}
 		bool encoreuntour = true,forcertour=false;
 		while (encoreuntour){
 			encoreuntour = false;
@@ -53,11 +60,11 @@ int main()
 				if (forcertour)
 					break;
 			}
-			for (auto afficher : vecteurres)
+			/*for (auto afficher : vecteurres)
 				cout << " | " << afficher.first;
-			cout << endl;
+			cout << endl;*/
 		}
-		cout << endl;
+		//cout << endl;
 		for (int bon = 0; bon <= compteur; bon++)
 			for (int toto = 1; toto <= nbtaches; toto++)
 				if (vecteurres.at(toto).first == bon)
