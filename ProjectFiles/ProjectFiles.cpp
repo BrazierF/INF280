@@ -16,6 +16,7 @@ int main()
 		compteur = 0;
 		cin >> nbtaches >> nbdependances;
 		//cout << nbtaches << nbdependances;
+		vector<int> resultat;
 		vector<pair<int, pair<bool, vector<int> > > > vecteurres(nbtaches + 1, pair<int, pair<bool, vector<int> > >(0, pair<bool, vector<int> >(true, vector<int>())));
 		for (int j = 0; j < nbdependances; j++){
 			cin >> numtache >> nbdeptache;
@@ -28,19 +29,21 @@ int main()
 			}
 		}	
 		bool trouve = false;
-		for (int i = 1; i <= nbtaches; i++){
+		for (int z = 1; z <= nbtaches; z++){
 			if (trouve)
-				vecteurres.at(i).second.first = false;
-			if(vecteurres.at(i).second.first)
+				vecteurres.at(z).second.first = false;
+			if (vecteurres.at(z).second.first){
 				trouve = true;
+				resultat.push_back(z);
+			}
 		}
 		bool encoreuntour = true,forcertour=false;
 		while (encoreuntour){
 			encoreuntour = false;
 			int achangerdanscetour;
-			for (int i = 1; i <= nbtaches; i++){
+			for (int m = 1; m <= nbtaches; m++){
 				forcertour = false;
-				pair<int, pair<bool, vector<int> > > x = vecteurres.at(i);
+				pair<int, pair<bool, vector<int> > > x = vecteurres.at(m);
 				if (!x.second.first){
 					encoreuntour = true;
 					x.second.first = true;
@@ -50,9 +53,10 @@ int main()
 					}
 					if (x.second.first){
 						compteur++;
-						vecteurres.at(i).first = compteur;
-						vecteurres.at(i).second.first = true;
-						achangerdanscetour = i;
+						vecteurres.at(m).first = compteur;
+						vecteurres.at(m).second.first = true;
+						achangerdanscetour = m;
+						resultat.push_back(m);
 						forcertour = true;
 						break;
 					}
@@ -65,11 +69,17 @@ int main()
 			cout << endl;*/
 		}
 		//cout << endl;
-		for (int bon = 0; bon <= compteur; bon++)
+		/*for (int bon = 0; bon < compteur; bon++)
 			for (int toto = 1; toto <= nbtaches; toto++)
-				if (vecteurres.at(toto).first == bon)
-					cout << toto << " ";
-		cout << endl;
+				if (vecteurres.at(toto).first == bon){
+					cout << toto;
+					if (compteur == nbtaches - 1)
+						cout << " ";
+				}
+		cout << endl;*/
+		for (int prout = 0; prout < resultat.size() - 1; prout++)
+			cout << resultat.at(prout)<<" ";
+		cout << resultat.at(resultat.size() - 1)<<endl;
 		if (i < nbinput - 1)
 			cout << "\n";
 	}
