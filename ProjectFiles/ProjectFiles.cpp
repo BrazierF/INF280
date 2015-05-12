@@ -27,11 +27,12 @@ int main()
 				vecteurres.at(numtache).second.second.push_back(tachedep);
 			}
 		}	
-		bool encoreuntour = true;
+		bool encoreuntour = true,forcertour=false;
 		while (encoreuntour){
 			encoreuntour = false;
-			vector<int> achangerdanscetour;
+			int achangerdanscetour;
 			for (int i = 1; i <= nbtaches; i++){
+				forcertour = false;
 				pair<int, pair<bool, vector<int> > > x = vecteurres.at(i);
 				if (!x.second.first){
 					encoreuntour = true;
@@ -41,15 +42,16 @@ int main()
 							x.second.first = false;
 					}
 					if (x.second.first){
-						x.second.first = false;
-						achangerdanscetour.push_back(i);
+						compteur++;
+						vecteurres.at(i).first = compteur;
+						vecteurres.at(i).second.first = true;
+						achangerdanscetour = i;
+						forcertour = true;
+						break;
 					}
 				}
-			}
-			compteur++;
-			for (auto nb : achangerdanscetour){
-				vecteurres.at(nb).first = compteur;
-				vecteurres.at(nb).second.first = true;
+				if (forcertour)
+					break;
 			}
 			for (auto afficher : vecteurres)
 				cout << " | " << afficher.first;
