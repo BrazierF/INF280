@@ -1,0 +1,27 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int main(){
+    int nbinput,nbcistern;
+    double base,hauteur,largeur,profondeur;
+    cin>>nbinput;
+    for(int i=0;i<nbinput;i++){
+        cin>>nbcistern;
+        vector<double> liste;
+        vector<pair<double,vector<int> > > coop;
+        vector<vector<double> > tailles(nbcistern,vector<double>());
+        for(int compt=0;compt<nbcistern;compt++){
+            cin>>base>>hauteur>>largeur>>profondeur;
+            liste.push_back(base);
+            liste.push_back(base+hauteur);
+            tailles.at(compt).push_back(base);
+            tailles.at(compt).push_back(hauteur);
+            tailles.at(compt).push_back(largeur);
+            tailles.at(compt).push_back(profondeur);
+        }
+        sort(liste.begin(),liste.end());
+    }
+}
