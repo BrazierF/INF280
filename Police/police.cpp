@@ -14,40 +14,79 @@ bool cava(vector<int> prout,int nbrue){
 }
 
 int main(){
-    int nbinput;
+    int nbinput=30000;
     cin >> nbinput;
     for(int i =0; i<nbinput;i++){
+	//while (true){
         int nbcroisement,croisement_debut,nbrues,croisement_fin,compteur=1;
         cin>>nbcroisement>>nbrues;
         vector<vector<int> > croisement(nbcroisement+1,vector<int>());
         for(int rue=1;rue<=nbrues;rue++){
             cin>>croisement_debut>>croisement_fin;
-            croisement.at(croisement_debut).push_back(rue);
-            croisement.at(croisement_fin).push_back(rue);
+            croisement.at(croisement_debut).push_back(croisement_fin);
+            croisement.at(croisement_fin).push_back(croisement_debut);
         }
-        bool trouve =false;
-        while (!trouve){
-            vector<int> essai,nonconcluant;
-            for(int jesaispas=1;jesaispas<compteur+1;jesaispas++){
-                essai.push_back(jesaispas);
-                //nonconcluant.insert(nonconcluant.end(),croisement.at(jesaispas).begin(),croisement.at(jesaispas).end());
-                for(int poto :croisement.at(jesaispas))
-                    nonconcluant.push_back(poto);
-                //break;
-            }
-            sort(nonconcluant.begin(),nonconcluant.end());
-            //if(cava(nonconcluant,nbrues)){
-                for(int poto :nonconcluant)
-                    cout<<poto<<"|";
-                break;
-            //}
-            compteur++;
-        }
-        for(auto toto: croisement){
-            for(int poto : toto)
-                cout<<poto<<"|";
-            cout<<"\n";
-        }
-    }
+		int nbcas = 0,noir=1,blanc=0,total=0;
+		vector<int> lesanciens(1,1);
+		vector<int> lesprochains;
+		bool macouleur,echec=false;
+		vector<pair<bool, bool> >marquage(nbcroisement + 1, make_pair(false, false));
+		marquage.at(1) = make_pair(true, false);
+		while (nbcas < nbcroisement){
+			if (lesanciens.size() == 0){
+				for (int compt = 1; compt <= nbcroisement; compt++)
+					if (!marquage.at(compt).first){
+						lesanciens.push_back(compt);
+						marquage.at(compt).first = true;
+						break;
+					}
+				if (noir > blanc)
+					total += blanc;
+				else total += noir;
+				//cout << "Total Provisoire :" << total << endl;
+				noir = 1; blanc = 0;
+			}
+			for (int cas : lesanciens){
+				macouleur = marquage.at(cas).second;
+				//cout << cas << " Couleur :" << macouleur << endl;
+				for (int prochain : croisement.at(cas)){
+					//cout << "Prochain :" << prochain << endl;
+					if (!marquage.at(prochain).first){
+						lesprochains.push_back(prochain);
+						//cout << prochain << "(" << !macouleur << ")\n";
+						marquage.at(prochain) = make_pair(true, !macouleur);
+						if (macouleur)
+							noir++;
+						else blanc++;				
+					}
+					else{
+						if (marquage.at(prochain).second == macouleur)
+							echec = true;
+							//cout << "Bug" << endl;
+
+					}
+				}
+				//cout << "Cas traite " << nbcas;
+				//cout << "\n\n\n\n";
+				nbcas++;
+				
+			}
+			if (echec){
+				cout << "Impossible" << endl;
+			}
+			lesanciens = lesprochains;
+			/*for (int oto : lesanciens)
+				cout << oto << endl;
+			cout << endl;*/
+			//cout << "tailles anc." << lesanciens.size() << endl;
+			lesprochains.clear();
+		}
+		if (noir > blanc)
+			total += blanc;
+		else total += noir;
+		//cout << "Total :" << total << endl;
+		if(!echec)
+			cout << total<<endl;
+	}
     return 0;
 }
