@@ -44,7 +44,6 @@ int main(){
 		vector<int> lesanciens(1,1);
 		vector<int> lesprochains;
 		bool macouleur,echec=false;
-		//pair<bool, bool> aprendre = make_pair(false,false);
 		vector<pair<bool, bool> >marquage(nbcroisement + 1, make_pair(false, false));
 		marquage.at(1) = make_pair(true, false);
 		while (nbcas < nbcroisement){
@@ -55,28 +54,22 @@ int main(){
 						marquage.at(compt).first = true;
 						break;
 					}
-				/*if (aprendre.first)
-					if (aprendre.second)
-						total += blanc;
-					else total += noir;
-				else*/
 					if (noir > blanc)
 						total += blanc;
 					else total += noir;
-				cout << "Total Provisoire :" << total << endl;
+				//cout << "Total Provisoire :" << total << endl;
 				noir = 1; blanc = 0;
-				//aprendre = make_pair(false, false);
 			}
 			for (int cas : lesanciens){
 				macouleur = marquage.at(cas).second;
 				bool prochainautrecouleur = false;
-				cout << cas << " Couleur :" << macouleur << endl;
+				//cout << cas << " Couleur :" << macouleur << endl;
 				for (int prochain : croisement.at(cas)){
-					cout << "Prochain :" << prochain << endl;
+					//cout << "Prochain :" << prochain << endl;
 					if (!marquage.at(prochain).first){
 						prochainautrecouleur = true;
 						lesprochains.push_back(prochain);
-						cout << prochain << "(" << !macouleur << ")\n";
+						//cout << prochain << "(" << !macouleur << ")\n";
 						marquage.at(prochain) = make_pair(true, !macouleur);
 						if (macouleur)
 							noir++;
@@ -84,22 +77,9 @@ int main(){
 					}
 					else{
 						if (marquage.at(prochain).second == macouleur){
-							/*if (!aprendre.first){
-								aprendre.first = true;
-								aprendre.second = !macouleur;
-							}
-							else {
-								if (macouleur == aprendre.second){*/
-									echec = true;
-									cout << "Bug" << endl;
-								//}
-							//}
-						//}
-						/*else{
-							prochainautrecouleur = true;
+							echec = true;
+							//cout << "Bug" << endl;
 						}
-						if (!prochainautrecouleur)
-							echec = true;*/
 					}
 				}
 				//cout << "Cas traite " << nbcas;
