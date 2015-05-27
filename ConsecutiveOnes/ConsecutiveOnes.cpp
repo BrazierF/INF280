@@ -1,6 +1,6 @@
 // ConsecutiveOnes.cpp : main project file.
 
-#include "stdafx.h"
+//#include "stdafx.h"
 #include <iostream>
 #include <vector>
 #include<utility>
@@ -61,7 +61,7 @@ int main()
 		}
 		//Print matrix
 		bool nonfini = true;
-		print(matrixorigine, nbdelignes, nbdecolonnes);
+		//print(matrixorigine, nbdelignes, nbdecolonnes);
 		vector<vector<int> > matrix(matrixorigine);
 		vector<int> dejafait(1,1);
 		vector<int> dansArbre(nbdecolonnes+1, 0);
@@ -88,13 +88,13 @@ int main()
 				}
 			}
 		}
-		for (pair<int, int> paire : couplesSurs)
+		/*for (pair<int, int> paire : couplesSurs)
 			cout << paire.first << " | " << paire.second << endl;
 		cout << "\n \n";
 
 		for (int sum : dansArbre)
 			cout << sum << " | ";
-		cout << "\n \n";
+		cout << "\n \n";*/
 		//Un tour de manege
 		for (int prout : dejafait){
 			for (int ligne = 0; ligne < nbdelignes; ligne++){
@@ -104,8 +104,8 @@ int main()
 			}
 		}
 		dejafait.clear();
-		print(matrix, nbdelignes, nbdecolonnes);
-		int debutanalyse = 2,cas=2,ligneintersection=nbdelignes-1;
+		//print(matrix, nbdelignes, nbdecolonnes);
+		int debutanalyse = 2,cas=2,ligneintersection=1;
 		while (dansArbre.at(0)<nbdecolonnes-2){
 			for (int ligne = 0; ligne < nbdelignes; ligne++){
 				if (matrix.at(ligne).at(0) == 2){
@@ -141,33 +141,35 @@ int main()
 					}
 				}
 			}
-			for (pair<int, int> paire : couplesSurs)
+			/*for (pair<int, int> paire : couplesSurs)
 				cout << paire.first << " | " << paire.second << endl;
-			cout << "\n \n";
+			cout << "\n \n";*/
 				if (dejafait.size() == 0){
-					//Changement de matrix
-					if (ligneintersection<nbdelignes)
-					for (int ligne = 0; ligne < nbdelignes; ligne++){
-						int nbevt = 0;
-						for (int colonne = 1; colonne <= nbdecolonnes; colonne++){
-							matrix.at(ligne).at(colonne) = matrixorigine.at(ligne).at(colonne)*matrixorigine.at(ligneintersection).at(colonne);
-							nbevt += matrix.at(ligne).at(colonne);
-						}
-						matrix.at(ligne).at(0) = nbevt;
+					if (debutanalyse == 1){
+						//Changement de matrix
+						if (ligneintersection < nbdelignes)
+							for (int ligne = 0; ligne < nbdelignes; ligne++){
+								int nbevt = 0;
+								for (int colonne = 1; colonne <= nbdecolonnes; colonne++){
+									matrix.at(ligne).at(colonne) = matrixorigine.at(ligne).at(colonne)*matrixorigine.at(ligneintersection).at(colonne);
+									nbevt += matrix.at(ligne).at(colonne);
+								}
+								matrix.at(ligne).at(0) = nbevt;
+							}
+						ligneintersection++;
 					}
-					ligneintersection--;
-					debutanalyse = 1;
+					else{ debutanalyse = 1; }
 				}
 				dejafait.clear();
-				print(matrix, nbdelignes, nbdecolonnes);
+				//print(matrix, nbdelignes, nbdecolonnes);
 			}
 		
 			resultat(couplesSurs, nbdecolonnes);
 			if (i < nbdecas-1)
 				cout << "\n";
-		for (pair<int, int> paire : couplesSurs)
+		/*for (pair<int, int> paire : couplesSurs)
 			cout << paire.first << " | " << paire.second << endl;
-		cout << "\n \n";
+		cout << "\n \n";*/
 	}
 	
     return 0;
