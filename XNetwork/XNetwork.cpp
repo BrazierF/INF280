@@ -1,3 +1,4 @@
+////	XNetwork (RECU)
 
 #include<iostream>
 #include <algorithm>
@@ -5,6 +6,7 @@
 using namespace std;
 
 int main(){
+	/*Recuperer les entrees*/
     int nb,nbinput,id,swag,monami,src,dst;
     cin>>nbinput;
     for(int i=0;i<nbinput;i++){
@@ -24,6 +26,9 @@ int main(){
         int index=0;
         if(find(monreseau.at(index).second.begin(),monreseau.at(index).second.end(),dst)!=monreseau.at(index).second.end())
             trouve=true;
+		/*Parcourir les amis des amis et ainsi de suite jusqu'a trouver la destination
+		Noter le nombre d'iteration qui sera la distance source-destination
+		*/
         while(!trouve){
             //cout<<"Iteration n:"<<index<<"  ";
             monreseau.push_back(make_pair(index+1,vector<int>()));

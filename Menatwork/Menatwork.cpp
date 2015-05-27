@@ -1,11 +1,11 @@
-// Menatwork.cpp : main project file.
+////	Menatwork (RECU).
 
-//#include "stdafx.h"
 #include <iostream>
 #include <vector>
 #include <algorithm>
 using namespace std;
 
+/*Retourne l'etat de la ville au temps t*/
 vector <vector<int> > viileAtSec(vector <vector<int> > & villeorigine, int temps){
 	vector <vector<int> > resultat(villeorigine);
 	for (int ligne = 0; ligne<resultat.size(); ligne++){
@@ -18,7 +18,7 @@ vector <vector<int> > viileAtSec(vector <vector<int> > & villeorigine, int temps
 	}
 	return resultat;
 }
-
+/*affiche l'etat de la ville mis en parametre*/
 void print(vector <vector<int> > & villeorigine){
 	for (int ligne = 0; ligne<villeorigine.size(); ligne++){
 		for (int colonne = 0; colonne<villeorigine.at(ligne).size(); colonne++){
@@ -28,7 +28,9 @@ void print(vector <vector<int> > & villeorigine){
 	}
 	cout << "\n\n";
 }
-
+/*Retourne (dans moment) tous les emplacements possibles à l'instant t+1 
+à partir de la liste des emplacements possible à l'instant t,
+en fonction de l'etat de la ville a l'instant t+1 */
 void accessibleapres(vector<int> & moment, vector <vector<int> > & villeorigine,int& temps){
 	vector <vector<int> > villeapres = viileAtSec(villeorigine, ++temps);
 	vector<int> apres;
@@ -81,11 +83,9 @@ int main(){
 				//Enlever \n
 				getchar();
 			}
-			//cout << "\n\n";
-			/*for (int i = 0; i < 15; i++){
-				cout << "Temps " << i << " : " << endl;
-				print(viileAtSec(mapville, i));
-			}*/
+			/*Parcourir la liste des emplacements possibles aux differents instants jusqu'a trouver la destination dans cette liste
+			On suppose qu'apres ppcm(differentes periodes)*taille de la ville si la destination n'est pas atteinte alors elle ne le sera jamais
+			on peut ameliorer cette borne en adaptant avec les periodes exactes du cas particulier, de plus apres quelques soumission (7*8*9*5) suffit */
 			vector<int> chemin(1, 0);
 			int temps = 0;
 			while (find(chemin.begin(), chemin.end(), tailletableau*tailletableau - 1) == chemin.end()&&temps<=7*8*9*5){

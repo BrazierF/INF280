@@ -1,6 +1,5 @@
-// ConsecutiveOnes.cpp : main project file.
+//// ConsecutiveOnes (NON RECU)
 
-//#include "stdafx.h"
 #include <iostream>
 #include <vector>
 #include<utility>
@@ -18,6 +17,7 @@ void print(vector<vector<int> > & matrix, int nbdelignes, int nbdecolonnes){
 	cout << "\n \n \n";
 }
 
+//affiche la sortie du programme a partir des couples trouves
 void resultat(vector<pair<int, int> > & couplesSur,int nbdecolonnes){
 	sort(couplesSur.begin(), couplesSur.end());
 	vector<int> resultat;
@@ -44,6 +44,7 @@ void resultat(vector<pair<int, int> > & couplesSur,int nbdecolonnes){
 int main()
 {
 	int nbdecas,nbdecolonnes,nbdelignes;
+	/*Recuperation des entrees*/
 	cin >> nbdecas;
 	for (int i = 0; i < nbdecas; i++){
 		cin >> nbdelignes >> nbdecolonnes;
@@ -66,6 +67,14 @@ int main()
 		vector<int> dejafait(1,1);
 		vector<int> dansArbre(nbdecolonnes+1, 0);
 		vector<pair<int, int> > couplesSurs;
+		/*On cherche les lignes ou il y a exactement deux 1, on pourra donc determiner 2 colonnes qui seront consecutives pour le resultat
+		On stocke ces colonnes dans couplesSurs 
+		cas particulier : lorrsqu'il y a exactement trois 1 dans une ligne avec un 1 a la colonne 1 on sait que les deux autres seront consecutives dans le resultat
+		Lorsqu'une colonne apparait dans deux couples (se voit dans dansArbre) on sait la colonne qui la precede et qui la suive,
+		on peut donc supprimer cette colonne de notre analyse.
+		Pour eviter d'etre bloque assez vite, des qu'on ne trouve plus une ligne avec exactement deux 1
+		on prend une ligne du tableau initial et on fait l'intersection avec les autres lignes du tableau  
+		et on reitere le procede decrit precedemment pour trouver d'autres couples certains*/
 		for (int ligne = 0; ligne < nbdelignes; ligne++){
 			if (matrix.at(ligne).at(0) == 2){
 				vector<int> toto;

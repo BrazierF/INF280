@@ -1,3 +1,5 @@
+////	Crime (RECU)
+
 #include <iostream>
 #include <vector>;
 #include <algorithm>
@@ -14,19 +16,12 @@ bool cava(vector<int> prout,int nbrue){
 }
 
 int main(){
-    //int nbinput=30000;
-    //cin >> nbinput;
-    //for(int i =0; i<nbinput;i++){
+ 
 	int nbcroisement=0, nbrues=0;
-	//bool premier=true;
+	/*Recuperation des entrees
+	(utilisation de scanf pour trouver la fin de l'entree)*/
 	while (scanf("%i",&nbcroisement)!=-1){
-		//cout << "Prout " << endl;
-		/*if (premier)
-			premier = false;
-		else 
-			cout << "\n";*/
 		cin >> nbrues;
-		//cout << nbcroisement << "  " << nbrues << endl;
 		int croisement_debut, croisement_fin, compteur = 1;
         vector<vector<int> > croisement(nbcroisement+1,vector<int>());
         for(int rue=1;rue<=nbrues;rue++){
@@ -34,12 +29,12 @@ int main(){
             croisement.at(croisement_debut).push_back(croisement_fin);
             croisement.at(croisement_fin).push_back(croisement_debut);
         }
-		/*for (int i = 0; i <= nbcroisement; i++){
-			for (auto caca : croisement.at(i))
-				cout << caca << " | ";
-			cout << endl;
-		}**/
-
+		/*On parcourt le ou les graphe(s) qui constitue(nt) la ville (les rue sont les aretes et les croisements sont les sommets)
+		Pour cela on part d'un sommet on le marque d'une couleur et on donne la couleur opposees a ses voisins si cela n'a pas ete fait
+		sinon on verifie qu'il est bien marque de la bonne couleur,si la couleur n'est pas bonne on arrete, la reponse est : 'impossible'
+		On recupere le minimum des sommets marque par une couleur et on repete cela a tous les graphes
+		Enfin on additionne ces minimums.
+		*/
 		int nbcas = 0,noir=1,blanc=0,total=0;
 		vector<int> lesanciens(1,1);
 		vector<int> lesprochains;
@@ -47,6 +42,8 @@ int main(){
 		vector<pair<bool, bool> >marquage(nbcroisement + 1, make_pair(false, false));
 		marquage.at(1) = make_pair(true, false);
 		while (nbcas < nbcroisement){
+			//si les anciens.size()==0 alors on a parcouru un graphe il faut passer au suivant
+			//on cherche donc un sommet non marque dans l'algo
 			if (lesanciens.size() == 0){
 				for (int compt = 1; compt <= nbcroisement; compt++)
 					if (!marquage.at(compt).first){
