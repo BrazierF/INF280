@@ -1,0 +1,10 @@
+/AssemblyInfo.cpp
+/app.rc
+*.ico
+*.sln
+*.vcxproj
+*.vcxproj.filters
+/ReadMe.txt
+/resource.h
+/stdafx.cpp
+/stdafx.h
