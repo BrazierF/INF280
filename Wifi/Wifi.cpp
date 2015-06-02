@@ -1,6 +1,5 @@
 // Wifi.cpp : main project file.
 
-#include "stdafx.h"
 #include <iostream>
 #include <vector>
 #include <iomanip>

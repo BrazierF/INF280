@@ -16,7 +16,7 @@ int main()
 		vector<pair<int, vector<int> > > utile;
 		cin >> nbmorceaux;
 		vector<int> abscisses;
-		vector < pair<int, int> > noncouvert(1, make_pair(0, 1000000));
+		//vector < pair<int, int> > noncouvert(1, make_pair(0, 1000000));
 		vector<vector<int> >morc(nbmorceaux, vector<int>());
 		vector<bool> marquage(nbmorceaux, true);
 		int totaleau=0;
