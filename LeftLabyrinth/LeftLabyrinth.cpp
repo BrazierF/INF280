@@ -13,19 +13,19 @@ bool entreeqn(vector<vector<bool>> & labyrinthe, pair<int, int> & casemnt){
 		//cout << i << " | ";
 		compteur=compteur << 1;
 		//cout << "Compteur   "<<compteur << endl;*/
-		if (labyrinthe.at(casemnt.first + ((-1 + 2 * (i / 2))*((i + 1) % 2))).at(casemnt.second + (i % 2 * (1 - 2 * (i / 2))))){
+        if (labyrinthe.at(casemnt.first + ((-1 + 2 * (i / 2))*((i + 1) % 2))).at(casemnt.second + (i % 2 * (1 - 2 * (i / 2))))){
 			compteur += 1;
 		}
 	}
-		if (compteur == 5||compteur==10)
-			return true;
-		else 
-			return false;
+    if ((compteur == 5||compteur==10)&&casemnt.first!=1&&casemnt.second!=1&&casemnt.first!=(labyrinthe.size()-2)&&casemnt.second!=(labyrinthe.at(0).size()-2))
+        return true;
+    else
+        return false;
 }
 
 
 bool casesuivante(vector<vector<bool>> & labyrinthe, pair<int, int> & casemnt, int & direction,bool & arrivee){
-	//cout << "Case (" << casemnt.first << "," << casemnt.second << ") Deplacement : "<< direction << endl;
+    //cout << "Case (" << casemnt.first << "," << casemnt.second << ") Deplacement : "<< direction << endl;
 	pair<int, int> caseapres;
 	if (direction == 0)
 		direction = 3;
@@ -36,10 +36,10 @@ bool casesuivante(vector<vector<bool>> & labyrinthe, pair<int, int> & casemnt, i
 		if (labyrinthe.at(casemnt.first + ((-1 + 2 * (direction / 2))*((direction + 1) % 2))).at(casemnt.second + (direction % 2 * (1 - 2 * (direction / 2))))){
 			//cout << endl;
 			caseapres = make_pair(casemnt.first + ((-1 + 2 * (direction / 2))*((direction + 1) % 2)), casemnt.second + (direction % 2 * (1 - 2 * (direction / 2))));
-			if (i == 3){
+            /*if (i == 3){
 				casemnt = caseapres;
 				return false;
-			}
+            }*/
 			break;
 		}
 		direction = (direction + 1) % 4;
@@ -87,8 +87,6 @@ int main()
 				break;
 			}
 		}
-		//A changer 
-		//depart = make_pair(28,20);
 		int deplacement = 2;
 		pair<int, int> suivant(depart);
 		bool arrivee = false;
@@ -97,12 +95,20 @@ int main()
 		}
 		entree = suivant;
 		arrivee = false;
-		while (!arrivee&&casesuivante(labyrinthe, suivant, deplacement, arrivee)){}
-		//cout << "Case Entree (" << entree.first << "," << entree.second << ")" << endl;
+        while (!arrivee&&casesuivante(labyrinthe, suivant, deplacement, arrivee)){
+            //cout<<"Comparaison (" << (entree.first==suivant.first) << "," <<  (entree.second==suivant.second) << ")"<<endl;
+            if(suivant.first==entree.first&&suivant.second==entree.second){
+                arrivee=false;
+                break;
+            }
+        }
+        //cout << "Case Entree (" << entree.first << "," << entree.second << ")" << endl;
 
 		if (arrivee)
-			cout << "YES" << endl;
-			//cout << "Case Arrive (" << suivant.first << "," << suivant.second << ")" << endl;
+        {
+            cout << "YES" << endl;
+            //cout << "Case Arrive (" << suivant.first << "," << suivant.second << ")" << endl;
+        }
 		else
 			cout << "NO" << endl;
 		if (cas < nbcas - 1)
