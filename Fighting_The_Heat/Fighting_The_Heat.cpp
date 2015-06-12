@@ -43,12 +43,13 @@ vector<pair<int, int>> diagonale(bool sens, int nb, int nblignes, int nbcolonnes
 
 int main()
 {
-	int nblignes, nbcolonnes, nbmots, nbcas;
-	cin >> nbcas;
-	/*for (int cas = 0; cas < nbcas; cas++){
-		cin >> nblignes >> nbcolonnes;-*/
-	while (scanf("%i","%i",&nblignes,&nbcolonnes)!=-1){
-		cin >> nbmots;
+    int nblignes, nbcolonnes, nbmots;//, nbcas;
+    //bool premier =true;
+    while (scanf("%i",&nblignes)!=-1){
+        /*if(premier)
+            premier=false;
+        else cout<<endl;*/
+        cin >>nbcolonnes >>nbmots;
 		vector<string> dictionnaire(nbmots * 2, "");
 		vector<string> diagNormale((nblignes + nbcolonnes - 1), "");
 		vector<string> diagInverse((nblignes + nbcolonnes - 1), "");
@@ -82,13 +83,15 @@ int main()
 				diagInverse.at(mot + nbcolonnes).push_back(grilleH.at(paire.first).at(paire.second));
 			}
 		}
-		for (int mot = 0; mot < nbmots; mot++){
+        for (int mot = 0; mot < nbmots * 2; mot++){
 			string motdico = dictionnaire.at(mot);
+           //cout<<"Mot du dictionnaire : "<<motdico<<endl;
 			for (int ligne = 0; ligne < nblignes; ligne++){
 				string motligne = grilleH.at(ligne);
 				size_t it = motligne.find(motdico);
 				while (it != string::npos){
 					for (int toto = 0; toto < motdico.size(); toto++){
+                        //cout << "(" <<ligne<< "," <<  it + toto << ") ";
 						marquage.at(ligne).at(it + toto) = true;
 					}
 					it = motligne.find(motdico, it + 1);
@@ -97,25 +100,21 @@ int main()
 			for (int colonne = 0; colonne < nbcolonnes; colonne++){
 				string motcolonne = grilleV.at(colonne);
 				size_t it = motcolonne.find(motdico);
-				/*cout << it << endl;
-				cout << (it == string::npos) << endl;
-				cout << "Colonne " << motcolonne << endl;
-				cout << "Dico " << motdico << endl;*/
 				while (it != string::npos){
 					for (int toto = 0; toto < motdico.size(); toto++){
-						//cout << "(" << it + toto << "," << colonne << ") ";
+                        //cout << "(" << it + toto << "," << colonne << ") ";
 						marquage.at(it + toto).at(colonne) = true;
 					}
 					it = motcolonne.find(motdico, it + 1);
 				}
 			}
 			for (int nombre = -nblignes; nombre < nbcolonnes - 1; nombre++){
-				//cout << "Alors " << nombre + nblignes << endl;
 				string motdiag = diagNormale.at(nombre + nblignes);
 				size_t it = motdiag.find(motdico);
 				vector<pair<int, int>> lettresaprendre = diagonale(false, nombre, nblignes, nbcolonnes);
 				while (it != string::npos){
 					for (int toto = 0; toto < motdico.size(); toto++){
+                        //cout << "(" << lettresaprendre.at(it + toto).first<< "," << lettresaprendre.at(it + toto).second<< ") ";
 						marquage.at(lettresaprendre.at(it + toto).first).at(lettresaprendre.at(it + toto).second) = true;
 					}
 					it = motdiag.find(motdico, it + 1);
@@ -127,71 +126,14 @@ int main()
 				vector<pair<int, int>> lettresaprendre = diagonale(true, nombre, nblignes, nbcolonnes);
 				while (it != string::npos){
 					for (int toto = 0; toto < motdico.size(); toto++){
+                        //cout << "(" << lettresaprendre.at(it + toto).first<< "," << lettresaprendre.at(it + toto).second<< ") ";
 						marquage.at(lettresaprendre.at(it + toto).first).at(lettresaprendre.at(it + toto).second) = true;
 					}
 					it = motdiag.find(motdico, it + 1);
 				}
 			}
 		}
-		for (int mot = nbmots; mot < nbmots * 2; mot++){
-			string motdico = dictionnaire.at(mot);
-			for (int ligne = 0; ligne < nblignes; ligne++){
-				string motligne = grilleH.at(ligne);
-				size_t it = motligne.find(motdico);
-				while (it != string::npos){
-					for (int toto = 0; toto < motdico.size(); toto++){
-						marquage.at(ligne).at(nbcolonnes - (it + 1 + toto)) = true;
-					}
-					it = motligne.find(motdico, it + 1);
-				}
-			}
-			for (int colonne = 0; colonne < nbcolonnes; colonne++){
-				string motcolonne = grilleV.at(colonne);
-				size_t it = motcolonne.find(motdico);
-				/*cout << it << endl;
-				cout << (it == string::npos) << endl;
-				cout << "Colonne " << motcolonne << endl;
-				cout << "Dico " << motdico << endl;*/
-				while (it != string::npos){
-					for (int toto = 0; toto < motdico.size(); toto++){
-						//cout << "(" << it + toto << "," << colonne << ") ";
-						marquage.at(nblignes - (1 + it + toto)).at(colonne) = true;
-					}
-					it = motcolonne.find(motdico, it + 1);
-				}
-			}
-			for (int nombre = -nblignes; nombre < nbcolonnes - 1; nombre++){
-				//cout << "Alors " << nombre + nblignes << endl;
-				string motdiag = diagNormale.at(nombre + nblignes);
-				size_t it = motdiag.find(motdico);
-				vector<pair<int, int>> lettresaprendre = diagonale(false, nombre, nblignes, nbcolonnes);
-				while (it != string::npos){
-					for (int toto = 0; toto < motdico.size(); toto++){
-						marquage.at(lettresaprendre.at(lettresaprendre.size() - (it + 1 + toto)).first).at(lettresaprendre.at(lettresaprendre.size() - (it + 1 + toto)).second) = true;
-					}
-					it = motdiag.find(motdico, it + 1);
-				}
-			}
-			for (int nombre = -nbcolonnes; nombre < nblignes - 1; nombre++){
-				string motdiag = diagInverse.at(nombre + nbcolonnes);
-				size_t it = motdiag.find(motdico);
-				vector<pair<int, int>> lettresaprendre = diagonale(true, nombre, nblignes, nbcolonnes);
-				while (it != string::npos){
-					for (int toto = 0; toto < motdico.size(); toto++){
-						marquage.at(lettresaprendre.at(lettresaprendre.size() - (it + 1 + toto)).first).at(lettresaprendre.at(lettresaprendre.size() - (it + 1 + toto)).second) = true;
-					}
-					it = motdiag.find(motdico, it + 1);
-				}
-			}
-		}
-		/*for (string toto : dictionnaire)
-			cout << toto << endl;
-		cout << "\n";
-		for (string toto : diagNormale)
-			cout << toto << endl;
-		cout << "\n";
-		for (string toto : diagInverse)
-			cout << toto << endl;*/
+
 		for (int ligne = 0; ligne < nblignes; ligne++){
 			for (int colonne = 0; colonne < nbcolonnes; colonne++){
 				if (!marquage.at(ligne).at(colonne)){
