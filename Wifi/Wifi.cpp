@@ -1,12 +1,19 @@
 // Wifi.cpp : main project file.
-
+//ACCEPTED
 #include <iostream>
 #include <vector>
 #include <iomanip>
 #include <algorithm>
 
 using namespace std;
-
+/*
+J'opere par dichotomie, sur la distance maximale D entre deux maisons couverte par le spot le plus proche
+On commence par la premiere maison de la rue, on met un spot a D/2 et a partir de la maison situee au dela de D apres la premiere maison
+on remet un autre spot a D/2 apres celle -ci
+soit on n'a pas assez de spot wifi et il fauta augmenter cette distance
+soit on a reussi a couvrir toutes les maison avec cette distance alors celle ci est trop grande et on la diminue
+On arrete lorsque l'intervalle de la dichotomie est plus petit que .1
+*/
 bool founction(float intervalle, vector<int> &adresses,int nbspot){
 	bool aubout = true;
 	int adprems = adresses.at(0),spot=1;
