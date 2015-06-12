@@ -1,4 +1,5 @@
 // LeftLabyrinth.cpp : main project file.
+//ACCEPTED
 
 //#include "stdafx.h"
 #include <iostream>
@@ -7,6 +8,17 @@
 #include <algorithm>
 using namespace std;
 
+/* J'ai stocke le labyrinthe dans un tableau de booleans entoure d'un mur aux bords de la grille
+ * Je cherche le bloc de mur le plus en haut a gauche et en partant de celui-ci,
+ * je contourne le labyrinthe en gardant la 'main gauche' au mur,
+ * je cherche l'entree qui possede exactement 2 murs opposes et qui ne se situe pas au bord de la carte,
+ * ensuite je continue cette marche en gardant la 'main gauche' au mur jusqu'a
+ * - soit trouver un carre de 4 case vide
+ * - soit revenir à l'entree du labyrinthe
+
+*/
+
+//Regarde si c'est bien l'entree du labyrinthe.
 bool entreeqn(vector<vector<bool>> & labyrinthe, pair<int, int> & casemnt){
 	int compteur = 0;
 	for (int i = 0; i < 4; i++){
@@ -23,7 +35,15 @@ bool entreeqn(vector<vector<bool>> & labyrinthe, pair<int, int> & casemnt){
         return false;
 }
 
+//Lors de la progression, trouve la case suivante en gardant la main au mur
+/*               _
+              _ |0| _
+             |3| _ |1|   Represente la direction que l'on suivait a la case precedante.
+                |2|
 
+                Ex. J'ai pris la direction 2 prec. (en bas), je regarde si je peux prendre la direction 1 d'abord, puis 2, puis 3 etc..
+                Ce qui permet de toujours aller a gauche des que possible
+*/
 bool casesuivante(vector<vector<bool>> & labyrinthe, pair<int, int> & casemnt, int & direction,bool & arrivee){
     //cout << "Case (" << casemnt.first << "," << casemnt.second << ") Deplacement : "<< direction << endl;
 	pair<int, int> caseapres;
