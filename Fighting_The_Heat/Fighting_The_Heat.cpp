@@ -1,5 +1,5 @@
 // Fighting_The_Heat.cpp : main project file.
-
+//ACCEPTED
 //#include "stdafx.h"
 #include <iostream>
 #include <string>
@@ -7,6 +7,14 @@
 #include <algorithm>
 using namespace std;
 
+/*
+J'ai pris la grille et l'ai enregistre dans differents tableaux de string
+il y a 4 tableaux differents qui correspondent a la grille vue horizontalement, verticalement, et les 2 diagonales
+Les mots a trouves sont stockes dans le dictionnaire et leurs inverses aussi.
+Ensuite j'effectue un found sur les differents tableaux et marque les lettres qui sont dans les mots des dictionnaires.
+
+La fonction diagonale fait la correspondance entre les indice de la grille initiale et le tableaux contenant les mot lus diagonalement
+*/
 vector<pair<int, int>> diagonale(bool sens, int nb, int nblignes, int nbcolonnes){
 	vector<pair<int, int>> diagonale;
 	if (!sens){
